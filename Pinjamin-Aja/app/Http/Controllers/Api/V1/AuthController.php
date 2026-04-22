@@ -45,4 +45,15 @@ class AuthController extends Controller
             'User Data'
         );
     }
+
+    public function logout(Request $request){
+        $user = $request->user();
+
+        $user->currentAccessToken()->delete();
+
+        return ApiResponse::success(
+            null,
+            'Logout Successfull'
+        );
+    }
 }
