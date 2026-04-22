@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Api\V1;
 use App\Helpers\ApiResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthenticateUserRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
+use Symfony\Component\HttpFoundation\Request;
 
 // use Illuminate\Http\Request;
 
@@ -21,7 +23,7 @@ class AuthController extends Controller
         if(!$user || !Hash::check($credentials['password'],$user->password)){
             return ApiResponse::error(
                 'Invalid Credentials',
-                Response::HTTP_UNAUTHORIZED,
+                Response::HTTP_UNAUTHORIZED
             );
         }
 
@@ -30,9 +32,17 @@ class AuthController extends Controller
         return ApiResponse::success(
             [
                 'token' => $token,
-                'user' => $user,
+                'user' => new UserResource($user),
             ],
             'Login Successfull'
+        );
+    }
+
+    public function me(Request $request){
+        $user = $request->user();
+        return ApiResponse::success(
+            new UserResource($user),
+            'User Data'
         );
     }
 }

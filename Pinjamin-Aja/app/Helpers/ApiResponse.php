@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+// use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
 
@@ -16,7 +17,7 @@ class ApiResponse
             'success' => true,
             'message' => $message,
             'data' => $data
-        ],$status);
+        ], $status);
     }
     public static function error(
         string $message,
@@ -27,7 +28,7 @@ class ApiResponse
             'success' => false,
             'message' => $message,
             'errors' => $errors,
-        ],$status);
+        ], $status);
     }
 
 }
