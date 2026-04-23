@@ -10,9 +10,9 @@ class Category extends Model
         'nama_kategori'
     ];
 
-    // public function tool(){
-    //     return $this->hasMany(Tool::class);
-    // }
+    public function tools(){
+        return $this->hasMany(Tool::class);
+    }
 
     public function scopeSearch($query, $search)
     {
